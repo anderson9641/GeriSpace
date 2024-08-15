@@ -1,5 +1,7 @@
 package com.triadev.spacereservation.entitie;
 
+
+import java.time.LocalTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -26,5 +28,9 @@ public class Space {
     private String name;
     @Column(name = "ADRRESS")
     private String adrress;
+    @Column(name = "START_OPERATION")
+    private LocalTime startOperation;
+    @Column(name = "END_OPERATION")
+    private LocalTime endOperation;
     
 }

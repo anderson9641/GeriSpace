@@ -39,7 +39,6 @@ public class ParticipantService {
                 participant.setCpf(participantDetails.getCpf());
                 participant.setEmail(participantDetails.getEmail());
                 participant.setFone(participantDetails.getFone());
-                participant.setAssociation(participantDetails.getAssociation());
                 // Atualize outros campos conforme necessário
                 return repo.save(participant);
             })

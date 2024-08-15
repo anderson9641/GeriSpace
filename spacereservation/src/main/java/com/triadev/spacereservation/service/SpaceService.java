@@ -37,6 +37,8 @@ public class SpaceService {
                 .map(space -> {
                     space.setName(spaceDetails.getName());
                     space.setAdrress(spaceDetails.getAdrress());
+                    space.setStartOperation(spaceDetails.getStartOperation());
+                    space.setEndOperation(spaceDetails.getEndOperation());
                     return repo.save(space);
                 })
                 .orElseThrow(() -> new RuntimeException("Space not found"));
