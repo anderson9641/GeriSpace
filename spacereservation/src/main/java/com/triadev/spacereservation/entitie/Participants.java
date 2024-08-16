@@ -35,7 +35,7 @@ public class Participants {
     private String email;
     @Column(name = "FONE", nullable = false)
     private String fone;
-    @OneToMany(mappedBy = "participante", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
     private List<AssociationParticipant> associacoes;
 
     

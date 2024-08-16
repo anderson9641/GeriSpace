@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.triadev.spacereservation.entitie.Association;
+import com.triadev.spacereservation.entitie.AssociationParticipant;
 import com.triadev.spacereservation.entitie.Participants;
+import com.triadev.spacereservation.entitie.Role;
 import com.triadev.spacereservation.repository.AssociationRepository;
 import com.triadev.spacereservation.repository.ParticipantsRepository;
 
@@ -20,6 +22,9 @@ private AssociationRepository repo;
 
 @Autowired
 private ParticipantsRepository participantsRepository;
+
+@Autowired
+private AssociationParticipantService associationParticipantService;
 
     public List<Association> getAllAssociations(){
         return repo.findAll();
@@ -39,18 +44,22 @@ private ParticipantsRepository participantsRepository;
 
     
 
-    /* public void addMembersToAssociation(UUID associationId, List<Participants> newMembers) {
+    public void addMembersToAssociation(UUID associationId, Participants member, Role role) {
         Association association = repo.findById(associationId)
                 .orElseThrow(() -> new RuntimeException("Association not found"));
 
-        for (Participants member : newMembers) {
-            member.setAssociation(association);
-            participantsRepository.save(member);
-        }
+        
+            Participants participant = participantsRepository.save(member);
+            AssociationParticipant associationParticipant = new AssociationParticipant();
+            associationParticipant.setAssociation(association);
+            associationParticipant.setParticipant(participant);
+            associationParticipant.setRole(role);
+            associationParticipantService.creteParticipant(associationParticipant);
 
-        association.getMembers().addAll(newMembers);
-        repo.save(association);
-    } */
+        
+
+        
+    } 
 
     public Association updateAssociation(UUID id, Association associationDetails) {
         return repo.findById(id)
