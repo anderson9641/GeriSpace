@@ -13,6 +13,7 @@ import com.triadev.spacereservation.entitie.Participants;
 import com.triadev.spacereservation.entitie.Reservation;
 import com.triadev.spacereservation.entitie.Role;
 import com.triadev.spacereservation.entitie.Space;
+import com.triadev.spacereservation.entitie.Week;
 import com.triadev.spacereservation.service.AssociationService;
 import com.triadev.spacereservation.service.ParticipantService;
 import com.triadev.spacereservation.service.ReservationService;
@@ -47,8 +48,11 @@ public class DataLoader {
              // Crie a associação 
              Association association = new Association();
              association.setName("Toque de bola");
+             Association association2 = new Association();
+             association2.setName("Bola Murcha");
              // Salve a associação
              Association newAssociation = associationService.createAssociation(association);
+             associationService.createAssociation(association2);
 
             // Crie e salve o participante 
             Participants responsible = new Participants();
@@ -87,6 +91,7 @@ public class DataLoader {
             reservation.setEndTime(reservation.getHoraFim());
             reservation.setStartDate(LocalDate.of(2024, 8, 15));
             reservation.setEndDate(LocalDate.of(2024, 12, 31));
+            reservation.setDayReservation(Week.SEGUNDA);
             reservationService.createReservation(reservation);
         };
     }

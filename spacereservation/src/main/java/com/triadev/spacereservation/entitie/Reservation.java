@@ -1,5 +1,4 @@
 package com.triadev.spacereservation.entitie;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -23,16 +22,18 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID cod;
+    
     @ManyToOne
     @JoinColumn(name = "COD_SPACE", nullable = false)
     private Association association;
+    
     @ManyToOne
     @JoinColumn(name = "COD_ASSOCIATION", nullable = false)
     private Space space;
 
-   /*  @Column(name = "DAY", nullable = false)
+    @Column(name = "DAY_RESAERVATION", nullable = false)
     @Enumerated(EnumType.STRING)
-    private DayOfWeek day; */
+    private Week dayReservation; 
 
     @Column(name = "STARTTIME", nullable = false)
     private LocalTime startTime;

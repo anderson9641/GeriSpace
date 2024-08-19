@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.triadev.spacereservation.entitie.Association;
 import com.triadev.spacereservation.entitie.AssociationParticipant;
 import com.triadev.spacereservation.repository.AssociationParticipantRepository;
 
@@ -20,5 +21,9 @@ public class AssociationParticipantService {
 
     public AssociationParticipant creteParticipant(AssociationParticipant associationParticipant){
         return repo.save(associationParticipant);
+    }
+
+    public List<AssociationParticipant> getLiAssociationParticipantsByCod(Association ass){
+        return repo.findByAssociation(ass);
     }
 }

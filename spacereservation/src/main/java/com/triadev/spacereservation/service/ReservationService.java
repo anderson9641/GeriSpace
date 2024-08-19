@@ -1,14 +1,16 @@
 package com.triadev.spacereservation.service;
 
-import com.triadev.spacereservation.entitie.Reservation;
-import com.triadev.spacereservation.repository.ReservationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.triadev.spacereservation.entitie.Reservation;
+import com.triadev.spacereservation.repository.ReservationRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ReservationService {
@@ -25,10 +27,15 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservation) {
-        // Lógica de negócio pode ser adicionada aqui, como checar disponibilidade.
+        
+        if(isReservationConflict(reservation)){
+            throw new RuntimeException("Conflicting reservation exists");
+        }
         return repo.save(reservation);
+
     }
 
+    @Transactional
     public Reservation updateReservation(UUID id, Reservation reservationDetails) {
         return repo.findById(id)
             .map(reservation -> {
@@ -36,7 +43,7 @@ public class ReservationService {
                 reservation.setSpace(reservationDetails.getSpace());
                 reservation.setStartTime(reservationDetails.getStartTime());
                 reservation.setEndTime(reservationDetails.getEndTime());
-                // Atualize outros campos conforme necessário
+                reservation.setDayReservation(reservationDetails.getDayReservation());
                 return repo.save(reservation);
             })
             .orElseThrow(() -> new RuntimeException("Reservation not found"));
@@ -49,4 +56,8 @@ public class ReservationService {
     /* public List<Reservation> findByDate(LocalDate date) {
         return repo.findByDate(date);
     } */
+
+    public Boolean isReservationConflict(Reservation reservation){
+        return repo.existsByTimeRange(reservation.getSpace(),reservation.getDayReservation(), reservation.getEndTime(), reservation.getStartTime());
+    }
 }
