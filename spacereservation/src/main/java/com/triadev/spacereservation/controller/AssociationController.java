@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +35,28 @@ public class AssociationController {
     }
 
     @GetMapping("/{cod}")
-    public Optional<Association> getAssociation(@PathVariable UUID cod){
+    public AssociationDTO getAssociation(@PathVariable UUID cod){
         return associationService.getByUUID(cod);
     }
 
+    @PostMapping
+    public ResponseEntity<Association> createAssociation(@RequestBody Association association){
+        Association createdAssociation = associationService.createAssociation(association);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAssociation);
+    }
 
+    @DeleteMapping("/{cod}")
+    public ResponseEntity<String> deleteAssociation(@PathVariable UUID cod){
+        AssociationDTO association = associationService.getByUUID(cod);
+
+        if(association == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Associação não encontrada!");
+        }
+        associationService.deleteAssociation(cod);
+        return ResponseEntity.ok("Associação deletada com sucesso");
+
+    }
+
+    
     
 }

@@ -38,7 +38,7 @@ public class AssociationService {
         for (Association association : list) {
 
             List<AssociationParticipant> members = associationParticipantService
-                    .getLiAssociationParticipantsByCod(association);
+                    .getListByAssociation(association);
             List<AssociationParticipantDTO> membersDTO = getAllMembesToAssociation(members);
             AssociationDTO newAssociation = new AssociationDTO(association, membersDTO);
             newList.add(newAssociation);
@@ -46,14 +46,14 @@ public class AssociationService {
         return newList;
     }
 
-    public Optional<Association> getByUUID(UUID cod) {
+    public AssociationDTO getByUUID(UUID cod) {
         Optional<Association> association = repo.findById(cod);
-        /* Association ass = association.get();
-        List<AssociationParticipant> members = associationParticipantService.getLiAssociationParticipantsByCod(ass);
+        Association ass = association.get();
+        List<AssociationParticipant> members = associationParticipantService.getListByAssociation(ass);
         List<AssociationParticipantDTO> membersDTO = getAllMembesToAssociation(members);
 
-        AssociationDTO newAssociation = new AssociationDTO(ass, membersDTO); */
-        return association;
+        AssociationDTO newAssociation = new AssociationDTO(ass, membersDTO); 
+        return newAssociation;
     }
 
     public Association createAssociation(Association association) {

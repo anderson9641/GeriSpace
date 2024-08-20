@@ -23,7 +23,7 @@ public class AssociationParticipantService {
         return repo.save(associationParticipant);
     }
 
-    public List<AssociationParticipant> getLiAssociationParticipantsByCod(Association ass){
+    public List<AssociationParticipant> getListByAssociation(Association ass){
         return repo.findByAssociation(ass);
     }
 }
