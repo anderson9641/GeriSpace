@@ -2,6 +2,8 @@ package com.triadev.spacereservation.entitie;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,11 +29,12 @@ public class AssociationParticipant {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID cod;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIdentityReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COD_PARTICIPANT", nullable = false)
     private Participants participant;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COD_ASSOCIATION", nullable = false)
     private Association association;
     

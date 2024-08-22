@@ -3,6 +3,8 @@ package com.triadev.spacereservation.entitie;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,6 +27,7 @@ public class Association {
     private UUID cod;
     @Column(name = "NAME_ASSOCIATION", nullable = false, length = 100)
     private String name;
+    @JsonIgnore
     @OneToMany(mappedBy = "association", cascade = CascadeType.ALL)
     private List<AssociationParticipant> participants;
 }

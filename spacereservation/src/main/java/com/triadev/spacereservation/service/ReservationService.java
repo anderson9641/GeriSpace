@@ -7,7 +7,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.triadev.spacereservation.entitie.Association;
 import com.triadev.spacereservation.entitie.Reservation;
+import com.triadev.spacereservation.entitie.Week;
 import com.triadev.spacereservation.repository.ReservationRepository;
 
 import jakarta.transaction.Transactional;
@@ -33,6 +35,14 @@ public class ReservationService {
         }
         return repo.save(reservation);
 
+    }
+
+    public List<Reservation> getResrvationsByDay(Week day){
+        return repo.findAllByDayReservation(day);
+    }
+
+    public List<Reservation> getReservationByAssociation(UUID cod){
+        return repo.findByAssociationCod(cod);
     }
 
     @Transactional
