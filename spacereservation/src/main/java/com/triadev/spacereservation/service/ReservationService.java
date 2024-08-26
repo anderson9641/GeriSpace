@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.triadev.spacereservation.entitie.Association;
 import com.triadev.spacereservation.entitie.Reservation;
+import com.triadev.spacereservation.entitie.Space;
 import com.triadev.spacereservation.entitie.Week;
 import com.triadev.spacereservation.repository.ReservationRepository;
 
@@ -19,6 +19,9 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository repo;
+
+    @Autowired
+    private SpaceService spaceService;
 
     public List<Reservation> getAllReservations() {
         return repo.findAll();
@@ -33,17 +36,25 @@ public class ReservationService {
         if(isReservationConflict(reservation)){
             throw new RuntimeException("Conflicting reservation exists");
         }
+        reservation.setEndTime(reservation.getHoraFim());
         return repo.save(reservation);
 
     }
 
-    public List<Reservation> getResrvationsByDay(Week day){
+    public List<Reservation> getReservationsByDay(Week day){
         return repo.findAllByDayReservation(day);
     }
 
     public List<Reservation> getReservationByAssociation(UUID cod){
         return repo.findByAssociationCod(cod);
     }
+    public List<Reservation> getReservationByDayAndSpace(Week day, UUID cod){
+        Optional<Space> space = spaceService.getSpaceById(cod);
+        Space newSpace = space.get();
+        return repo.findAllByDayReservationAndSpace(day, newSpace);
+    }
+    
+    
 
     @Transactional
     public Reservation updateReservation(UUID id, Reservation reservationDetails) {
@@ -68,6 +79,9 @@ public class ReservationService {
     } */
 
     public Boolean isReservationConflict(Reservation reservation){
-        return repo.existsByTimeRange(reservation.getSpace(),reservation.getDayReservation(), reservation.getEndTime(), reservation.getStartTime());
+        return repo.existsByTimeRange(reservation.getSpace(),reservation.getDayReservation(), reservation.getStartTime());
     }
+
+
+    
 }
