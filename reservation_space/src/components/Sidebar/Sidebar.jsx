@@ -1,5 +1,9 @@
 import { useState } from "react";
 import "./Sidebar.css"; // Vamos criar este arquivo para estilizar o componente
+import Api from  '../../utils/Api'
+
+
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,6 +11,11 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const allAssociation = () => {
+    Api.getAssociation();
+  }
+ 
 
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -16,7 +25,7 @@ const Sidebar = () => {
         <div className={`line ${isOpen ? "open" : ""}`}></div>
       </div>
       <nav className="menu">
-        <a href="#">Home</a>
+        <a onClick={allAssociation}>Home</a>
         <a href="#">Associações</a>
         <a href="#">Espaços</a>
         <a href="#">Reservas</a>
