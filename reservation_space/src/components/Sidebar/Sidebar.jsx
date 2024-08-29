@@ -5,13 +5,8 @@ import Api from  '../../utils/Api'
 
 
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Sidebar = ({isOpen,toggleSidebar}) => {
+  
   const allAssociation = () => {
     Api.getAssociation();
   }

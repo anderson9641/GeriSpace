@@ -1,9 +1,11 @@
 import { useEffect,useState } from "react";
 import Api from '../utils/Api'
 import './Associations.css'
+import Lista from '../components/requerint/ListaRequerinte'
+import RequerinteCreate from "./requerinte/RequirinteCreate";
 
 
-const Association = () =>{
+const Association = ({isOpen,toggleSidebar}) =>{
 
     const [associations,setAssociations] = useState([]);
 
@@ -11,29 +13,20 @@ const Association = () =>{
         async function getAssociation(){
             const result = await Api.getAssociation()
             setAssociations(result)
-            console.log(result)
+            
         } 
         getAssociation()
         
     },[])
 
     return(
-        <>
-        <div className="content">
+        <RequerinteCreate/>
 
-        {associations && associations.map((association) =>(
-            <div key={association.cod} className="association">
-                <div>{association.name}</div>
-                <div>{association.participants.map((member) => (
-                    <div key={member.codParticipant} className="members">
-                        <div>{member.nameParticipant}</div>
-                    </div>
-                ))}</div>
-            </div>
-        )
-    )} 
-    </div>
-        </>
+           /*  <Lista  associations={associations} />      */  
+       
+        
+         
+        
     )
 }
 export default Association;

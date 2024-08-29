@@ -1,0 +1,22 @@
+.association-item{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 0.25px rgb(206, 206, 206);
+    width: 100%;
+    height: 4vh;
+}
+.association-item button{
+    border: none;
+    background: transparent;
+}
+
+.association-item button:hover{
+    background: #4b4b4b;
+    color: white;
+}
+.botoes{
+    display: flex;
+    gap: 2rem;
+}
