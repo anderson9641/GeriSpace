@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import './RequerinteCreate.css'
+import api from '../../utils/Api'
 
 const RequerinteCreate = ()=>{
    
@@ -43,7 +44,8 @@ const RequerinteCreate = ()=>{
     
         const handleSubmit = (event) => {
             event.preventDefault();
-            console.log({ associationName, participants });
+            api.insertEntityAndPaticipants(associationName,participants)
+            //console.log({ associationName, participants });
             // Aqui você pode enviar os dados ao backend ou processá-los conforme necessário
         };
     

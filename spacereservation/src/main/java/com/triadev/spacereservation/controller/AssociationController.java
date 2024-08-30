@@ -14,17 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.triadev.spacereservation.dto.AssociationDTO;
+import com.triadev.spacereservation.dto.AssociationRequestDTO;
+import com.triadev.spacereservation.dto.ParticipantDTO;
 import com.triadev.spacereservation.entitie.Association;
+import com.triadev.spacereservation.entitie.Participants;
 import com.triadev.spacereservation.service.AssociationService;
+import com.triadev.spacereservation.service.ParticipantService;
 
 @RestController
 @RequestMapping("/association")
 public class AssociationController {
 
     private final AssociationService associationService;
+    private final ParticipantService participantService;
 
-    public AssociationController(AssociationService associationService){
+    public AssociationController(AssociationService associationService, ParticipantService participantService){
         this.associationService = associationService;
+        this.participantService = participantService;
     }
 
 
@@ -39,9 +45,14 @@ public class AssociationController {
     }
 
     @PostMapping
-    public ResponseEntity<Association> createAssociation(@RequestBody Association association){
-        Association createdAssociation = associationService.createAssociation(association);
+    public ResponseEntity<Association> createAssociation(@RequestBody AssociationRequestDTO associationRequest){
+        Association Association = associationRequest.getAssociation();
+        List<ParticipantDTO> listParticipants =  associationRequest.getParticipants();
+        System.out.println(listParticipants.get(0).getName());
+
+        Association createdAssociation = associationService.createAssociationWithParticipants(Association, listParticipants);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAssociation);
+        
     }
 
     @DeleteMapping("/{cod}")

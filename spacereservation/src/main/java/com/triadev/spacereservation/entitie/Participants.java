@@ -29,11 +29,11 @@ public class Participants {
     private UUID cod;
     @Column(name = "NAME_PARTICIPANT", nullable = false, length = 150)
     private String name;
-    @Column(name = "CPF", nullable = false)
+    @Column(name = "CPF")
     private String cpf;
     @Column(name = "EMAIL")
     private String email;
-    @Column(name = "FONE", nullable = false)
+    @Column(name = "FONE")
     private String fone;
     @JsonIgnore
     @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)

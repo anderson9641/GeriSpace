@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.triadev.spacereservation.dto.AssociationDTO;
 import com.triadev.spacereservation.dto.AssociationParticipantDTO;
+import com.triadev.spacereservation.dto.ParticipantDTO;
 import com.triadev.spacereservation.entitie.Association;
 import com.triadev.spacereservation.entitie.AssociationParticipant;
 import com.triadev.spacereservation.entitie.Participants;
@@ -26,6 +27,9 @@ public class AssociationService {
 
     @Autowired
     private ParticipantsRepository participantsRepository;
+
+    @Autowired
+    private ParticipantService participantService;
 
     @Autowired
     private AssociationParticipantService associationParticipantService;
@@ -52,12 +56,36 @@ public class AssociationService {
         List<AssociationParticipant> members = associationParticipantService.getListByAssociation(ass);
         List<AssociationParticipantDTO> membersDTO = getAllMembesToAssociation(members);
 
-        AssociationDTO newAssociation = new AssociationDTO(ass, membersDTO); 
+        AssociationDTO newAssociation = new AssociationDTO(ass, membersDTO);
         return newAssociation;
     }
 
     public Association createAssociation(Association association) {
-        return repo.save(association);
+        Association newAssociation = repo.save(association);
+        return newAssociation;
+    }
+
+    public Association createAssociationWithParticipants(Association association, List<ParticipantDTO> participantDTO) {
+
+        List<AssociationParticipant> associationParticipants = new ArrayList<>();
+
+        for (ParticipantDTO dto : participantDTO) {
+            Participants participant = new Participants();
+            participant.setName(dto.getName());
+            System.out.println(dto.getName());
+            Participants newParticipant = participantService.createParticipant(participant);
+            AssociationParticipant associationParticipant = new AssociationParticipant();
+            associationParticipant.setAssociation(association);
+            associationParticipant.setParticipant(newParticipant);
+            associationParticipant.setRole(dto.getIsResponsible());
+
+            associationParticipants.add(associationParticipant);
+        }
+
+        association.setParticipants(associationParticipants);
+
+        //return repo.save(association);
+        return null;
     }
 
     public void deleteAssociation(UUID cod) {

@@ -13,6 +13,28 @@ const baseUrlApi = "http://127.0.0.1:8080/";
       return []
     }
     
-};
+}
+const insertEntityAndPaticipants = async (entity, listParticipants) =>{
+  const mapIsResponsibleToEnum = (isResponsible)=>{
+    return isResponsible ? 'RESPONSIBLE' : 'MEMBER'
+  }
   
-export default {getAssociation};
+  const data = {
+    name: entity,
+    participants: listParticipants.map(participant => ({
+      name: participant.name,
+      isResponsible : mapIsResponsibleToEnum(participant.isResponsible),
+    })) 
+  }
+
+  try {
+    const response = await axios.post(baseUrlApi+"association",data);
+    console.log('Associação criada com sucesso', data);
+  } catch (error) {
+    console.error('Error ao criar a associação', error)
+  }
+  
+}
+;
+  
+export default {getAssociation, insertEntityAndPaticipants};
