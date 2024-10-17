@@ -1,0 +1,18 @@
+
+
+---- Cadastro de Locais
+---- Edição de Locais
+---- Consulta de locais
+
+
+---- Cadastro de Entidades (cadastro de participantes)
+---- Edição de entidades (edição de participantes)
+---- Consulta de Entidades
+
+
+---- Cadastro de Reservas
+---- Edição de reservas
+---- Consulta de Reservas
+	reservas por local por semana
+	reservas de todos os locais por dia
+
